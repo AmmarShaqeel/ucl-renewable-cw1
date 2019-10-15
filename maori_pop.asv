@@ -1,0 +1,14 @@
+p0 = 500;
+pf = 100000;
+r = 0.0287;
+t0 = 1280;
+t = [1280:1:1550];
+
+p = p0.*exp((r.*(t-t0)))./(p0/pf.*exp((r.*(t-t0)))+1);
+
+plot(t,p);
+xlabel('Date (CE)');
+ylabel('Population');
+set(gca,'Fontname','CMU bright','Fontsize',14);
+xlim([1200 1600]);
+%ylim([0 120000]);
