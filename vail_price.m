@@ -1,11 +1,15 @@
 clear all;
 clc;
 
-c = [0:1e-7:2.03e-5];
-t0 = 1280;
 
-t = log(1-(0.0287*-log(58000)./(500*c)))/0.0287 + t0;
+p0 = 5;
+pf = 209;
+t0 = 1963;
+tf = 2019;
 
+t = [1963:0.1:2019];
+td = log2(pf/p0)/(tf-t0);
+p = p0*2.^(td.*(t-t0));
 
 
 %% Printing Image%%
@@ -16,16 +20,24 @@ fsz = 14;      % Fontsize
 lw = 1.5;      % LineWidth
 msz = 8;       % MarkerSize
 
+xmin = min(t);
+xmax = max(t);
+xbuffer = 10;
+
+ymin = min(p);
+ymax = max(p);
+ybuffer = 5;
+
 figure(1);
 pos = get(gcf, 'Position');
 ax = axes;
 set(gcf, 'Position', [pos(1) pos(2) width*100, height*100]); %<- Set size
 set(gca,'Fontname','CMU bright','Fontsize',fsz);
-plot(c,t);
-ylabel('Extinction Date');
-xlabel('Chance of successful ');
+plot(t,p,'-b');
+ylabel('Price ($)');
+xlabel('Year');
 %title('Maori Population vs Date');
 grid on;
-%xlim([0 0.051]);
-%ylim([(1.0348e+03) 9420]);
-print(gcf,'effect_r.png','-dpng','-r300');
+xlim([(xmin - xbuffer) (xmax + xbuffer)]);
+ylim([(ymin-ybuffer) (ymax+ybuffer)]);
+print(gcf,'vail_price.png','-dpng','-r300');
