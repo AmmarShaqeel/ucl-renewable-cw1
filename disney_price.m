@@ -8,8 +8,8 @@ t0 = 1955;
 tf = 2019;
 
 t = [1955:0.1:2019];
-td = log2(pf/p0)/(tf-t0);
-p = p0*2.^(td.*(t-t0));
+td = log(pf/p0)/(tf-t0);
+p = p0*exp(td.*(t-t0));
 
 
 %% Printing Image%%
@@ -27,6 +27,8 @@ xbuffer = 10;
 ymin = min(p);
 ymax = max(p);
 ybuffer = 5;
+
+doubling_time = log(2)/td
 
 figure(1);
 pos = get(gcf, 'Position');
